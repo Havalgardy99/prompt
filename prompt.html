@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ckb" dir="rtl" id="mainHtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="pageTitle.promptDetail">Prompt | AI Resource Hub</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Vazirmatn:wght@400;600;700&family=Noto+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main id="main">
+    <div class="container">
+      <a href="javascript:history.back()" class="back-link"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="actions.back">Back</span></a>
+      <div id="prompt-detail"></div>
+      <section class="section-block" id="related">
+        <h2 class="section-title" data-i18n="actions.relatedPrompts">Related prompts</h2>
+        <div class="prompts-grid" id="related-grid"></div>
+      </section>
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <div class="toast-wrap" id="toast-wrap" aria-live="polite"></div>
+
+  <script src="js/includes.js"></script>
+  <script src="js/i18n.js"></script>
+  <script>
+    (function() {
+      var params = new URLSearchParams(window.location.search);
+      var id = parseInt(params.get('id'), 10);
+      var PROMPTS_URL = 'data/prompts.json';
+
+      function showToast(msg, type) {
+        var wrap = document.getElementById('toast-wrap');
+        if (!wrap) return;
+        var toast = document.createElement('div');
+        toast.className = 'toast' + (type === 'success' ? ' success' : '');
+        toast.setAttribute('role', 'status');
+        toast.innerHTML = '<i class="fa-solid fa-check"></i> ' + msg;
+        wrap.appendChild(toast);
+        setTimeout(function() { toast.remove(); }, 3000);
+      }
+
+      window.copyToClipboard = function(text, btn) {
+        if (!navigator.clipboard) return;
+        navigator.clipboard.writeText(text).then(function() {
+          var t = (window.AIHub && window.AIHub.t('actions.copied')) || 'Copied!';
+          showToast(t, 'success');
+          var orig = btn.innerHTML;
+          btn.innerHTML = '<i class="fa-solid fa-check"></i> ' + t;
+          btn.classList.add('copied');
+          setTimeout(function() { btn.innerHTML = orig; btn.classList.remove('copied'); }, 1500);
+        });
+      };
+
+      window.showMeaningModal = function(title, description, detail) {
+        var closeLabel = (window.AIHub && window.AIHub.t('actions.closeModal')) || 'Close';
+        var overlay = document.getElementById('meaning-modal-overlay');
+        if (!overlay) {
+          overlay = document.createElement('div');
+          overlay.id = 'meaning-modal-overlay';
+          overlay.className = 'meaning-modal-overlay';
+          overlay.style.display = 'none';
+          overlay.setAttribute('role', 'dialog');
+          overlay.setAttribute('aria-modal', 'true');
+          overlay.setAttribute('aria-labelledby', 'meaning-modal-title');
+          overlay.innerHTML =
+            '<div class="meaning-modal">' +
+            '<div class="meaning-modal-header">' +
+            '<h2 id="meaning-modal-title"></h2>' +
+            '<button type="button" class="meaning-modal-close" aria-label="' + closeLabel + '"><i class="fa-solid fa-times"></i></button>' +
+            '</div>' +
+            '<div class="meaning-modal-body">' +
+            '<p class="meaning-desc" id="meaning-modal-desc"></p>' +
+            '<div class="meaning-detail" id="meaning-modal-detail"></div>' +
+            '</div></div>';
+          document.body.appendChild(overlay);
+          overlay.querySelector('.meaning-modal-close').addEventListener('click', function() { overlay.style.display = 'none'; });
+          overlay.addEventListener('click', function(e) { if (e.target === overlay) overlay.style.display = 'none'; });
+        }
+        overlay.querySelector('#meaning-modal-title').textContent = title || '';
+        overlay.querySelector('#meaning-modal-desc').textContent = description || '';
+        var detailEl = overlay.querySelector('#meaning-modal-detail');
+        detailEl.textContent = detail || '';
+        detailEl.style.display = detail ? 'block' : 'none';
+        var closeBtn = overlay.querySelector('.meaning-modal-close');
+        if (closeBtn) closeBtn.setAttribute('aria-label', (window.AIHub && window.AIHub.t('actions.closeModal')) || 'Close');
+        overlay.style.display = 'flex';
+      };
+
+      window.showMeaningModalFromId = function(meaningId) {
+        var titleEl = document.getElementById(meaningId + '-title');
+        var descEl = document.getElementById(meaningId + '-desc');
+        var detailEl = document.getElementById(meaningId + '-detail');
+        var title = titleEl ? titleEl.innerText : '';
+        var desc = descEl ? descEl.innerText : '';
+        var detail = detailEl ? detailEl.innerText : '';
+        window.showMeaningModal(title, desc, detail);
+      };
+
+      function t(path) { return (window.AIHub && window.AIHub.t(path)) || path; }
+      function tOr(path, fallback) {
+        var v = t(path);
+        return (v && v !== path) ? v : (fallback || '');
+      }
+      function getTitle(p) {
+        var key = 'prompts.' + p.id + '.title';
+        var val = (window.AIHub && window.AIHub.t(key));
+        return (val && val !== key) ? val : (p.title || ('Prompt ' + p.id));
+      }
+      function getDesc(p) {
+        var key = 'prompts.' + p.id + '.description';
+        var val = (window.AIHub && window.AIHub.t(key));
+        return (val && val !== key) ? val : (p.description || '');
+      }
+      function renderDetail(p) {
+        var displayTitle = p.title || ('Prompt ' + p.id);
+        var displayDesc = p.description || '';
+        var meaningTitle = getTitle(p);
+        var meaningDesc = getDesc(p);
+        var detailKey = 'prompts.' + p.id + '.detail';
+        var detail = t(detailKey) || '';
+        if (detail === detailKey) detail = '';
+        var tips = p.tips || {};
+        var tools = (p.toolTags || []).map(function(slug) {
+          var name = tOr('tools.' + slug + '.name', slug);
+          return '<span class="prompt-tag blue">' + name + '</span>';
+        }).join(' ');
+        var diff = p.difficulty ? '<span class="difficulty-badge ' + p.difficulty + '">' + tOr('difficulty.' + p.difficulty, p.difficulty) + '</span>' : '';
+        var meaningId = 'meaning-detail-' + p.id;
+        var html =
+          '<div class="detail-card">' +
+          '<div class="tag-row">' + diff + tools + '</div>' +
+          '<h1 class="section-title">' + displayTitle.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</h1>' +
+          '<p class="section-desc">' + displayDesc.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</p>' +
+          '<div class="prompt-text-box">' +
+          '<pre style="margin:0;white-space:pre-wrap;word-break:break-word;" id="prompt-body-' + p.id + '">' + (p.prompt || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</pre>' +
+          '<div class="btn-row" style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.5rem;">' +
+          '<button type="button" class="btn-copy" onclick="copyToClipboard(document.getElementById(\'prompt-body-' + p.id + '\').innerText, this)"><i class="fa-regular fa-copy"></i> ' + tOr('actions.copyPrompt', tOr('actions.copy', 'Copy')) + '</button>' +
+          '<button type="button" class="btn-secondary" onclick="window.showMeaningModalFromId && showMeaningModalFromId(\'' + meaningId + '\')"><i class="fa-solid fa-circle-info"></i> ' + tOr('actions.viewMeaning', 'View meaning') + '</button>' +
+          '</div>' +
+          '<div class="d-none" id="' + meaningId + '-title">' + meaningTitle.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div>' +
+          '<div class="d-none" id="' + meaningId + '-desc">' + meaningDesc.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div>' +
+          '<div class="d-none" id="' + meaningId + '-detail">' + detail.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div>' +
+          '</div>' +
+          '<h3 style="margin-top:1.5rem;margin-bottom:0.5rem;">' + tOr('tips.aspectRatio', 'Aspect ratio') + '</h3>' +
+          '<p class="section-desc">' + (tips.aspectRatio || '—') + '</p>' +
+          '<h3 style="margin-top:1rem;">' + tOr('tips.style', 'Style') + '</h3>' +
+          '<p class="section-desc">' + (tips.style || '—') + '</p>' +
+          '<h3 style="margin-top:1rem;">' + tOr('tips.negativePrompt', 'Negative prompt') + '</h3>' +
+          '<p class="section-desc">' + (tips.negativePrompt || '—') + '</p>' +
+          '<h3 style="margin-top:1rem;">' + tOr('tips.quality', 'Quality') + '</h3>' +
+          '<p class="section-desc">' + (tips.quality || '—') + '</p>' +
+          '</div>';
+        return html;
+      }
+
+      function renderRelatedCard(p) {
+        var displayTitle = p.title || ('Prompt ' + p.id);
+        var displayDesc = p.description || '';
+        var meaningTitle = getTitle(p);
+        var meaningDesc = getDesc(p);
+        var detailKey = 'prompts.' + p.id + '.detail';
+        var detail = t(detailKey) || '';
+        if (detail === detailKey) detail = '';
+        var copyLabel = tOr('actions.copyPrompt', tOr('actions.copy', 'Copy'));
+        var viewMeaningLabel = tOr('actions.viewMeaning', 'View meaning');
+        var promptEscaped = (p.prompt || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        var contentId = 'prompt-related-' + p.id + '-' + Math.random().toString(36).slice(2, 9);
+        var meaningId = 'meaning-related-' + p.id + '-' + Math.random().toString(36).slice(2, 9);
+        var card = document.createElement('article');
+        card.className = 'glass-card prompt-card';
+        card.innerHTML =
+          '<div class="card-image"><a href="prompt.html?id=' + p.id + '"><img src="' + (p.image || '') + '" alt="" loading="lazy"></a></div>' +
+          '<div class="card-body">' +
+          '<h3><a href="prompt.html?id=' + p.id + '" style="color:inherit;text-decoration:none;">' + displayTitle.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</a></h3>' +
+          '<p class="card-desc">' + displayDesc.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</p>' +
+          '<div class="d-none" id="' + contentId + '">' + promptEscaped + '</div>' +
+          '<div class="d-none" id="' + meaningId + '-title">' + meaningTitle.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div>' +
+          '<div class="d-none" id="' + meaningId + '-desc">' + meaningDesc.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div>' +
+          '<div class="d-none" id="' + meaningId + '-detail">' + detail.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div>' +
+          '<div class="btn-row" style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.5rem;">' +
+          '<button type="button" class="btn-copy" onclick="copyToClipboard(document.getElementById(\'' + contentId + '\').innerText, this)"><i class="fa-regular fa-copy"></i> ' + copyLabel + '</button>' +
+          '<button type="button" class="btn-secondary" onclick="showMeaningModalFromId(\'' + meaningId + '\')"><i class="fa-solid fa-circle-info"></i> ' + viewMeaningLabel + '</button>' +
+          '</div>' +
+          '</div>';
+        return card;
+      }
+
+      fetch(PROMPTS_URL)
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          var prompts = data.prompts || [];
+          var p = prompts.find(function(x) { return x.id === id; });
+          var detailEl = document.getElementById('prompt-detail');
+          var relatedEl = document.getElementById('related-grid');
+          if (!p) {
+            detailEl.innerHTML = '<p class="empty-state">' + (t('errors.promptNotFound') || 'Prompt not found.') + '</p>';
+            return;
+          }
+          function render() {
+            document.title = (p.title || ('Prompt ' + p.id)) + ' | AI Resource Hub';
+            detailEl.innerHTML = renderDetail(p);
+            relatedEl.innerHTML = '';
+            var relatedIds = p.relatedIds || [];
+            var related = prompts.filter(function(x) { return relatedIds.indexOf(x.id) >= 0; });
+            related.forEach(function(r) { relatedEl.appendChild(renderRelatedCard(r)); });
+          }
+          var i18nReady = (window.AIHub && window.AIHub.i18nReady) ? window.AIHub.i18nReady : Promise.resolve();
+          i18nReady.then(function() {
+            render();
+            window._promptPageRender = render;
+            window.onLangChange = function() { if (window._promptPageRender) window._promptPageRender(); };
+          });
+        })
+        .catch(function() {
+          document.getElementById('prompt-detail').innerHTML = '<p class="empty-state">' + (t('errors.loadPrompt') || 'Failed to load prompt.') + '</p>';
+        });
+    })();
+  </script>
+</body>
+</html>

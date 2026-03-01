@@ -1,0 +1,7 @@
+# Cloudflare Pages: exclude from upload when using Wrangler
+node_modules
+.git
+*.log
+.env
+.env.*
+.DS_Store

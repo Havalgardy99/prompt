@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ckb" dir="rtl" data-bs-theme="dark" id="mainHtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Prompts | PromptCore</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;600;800&family=Noto+Sans+Arabic:wght@300;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <nav class="container py-4 d-flex flex-wrap justify-content-between align-items-center gap-3">
+        <a href="index.html" class="nav-brand"><h3 class="mb-0">PROMPT<span>CORE</span></h3></a>
+        <div class="d-flex align-items-center gap-3">
+            <a href="index.html" class="nav-link-cat" data-key="nav-all">All</a>
+            <a href="art.html" class="nav-link-cat" data-key="nav-art">Art</a>
+            <a href="photo.html" class="nav-link-cat" data-key="nav-photo">Photo</a>
+            <a href="code.html" class="nav-link-cat active" data-key="nav-code">Code</a>
+            <select class="form-select form-select-sm bg-transparent border-secondary text-body rounded-pill px-3" style="width: auto;" onchange="updateLang(this.value)">
+                <option value="en">English</option>
+                <option value="ku">Kurdî</option>
+                <option value="ar">العربية</option>
+            </select>
+        </div>
+    </nav>
+
+    <main class="container pb-5">
+        <a href="index.html" class="back-link" data-key="back"><i class="fa-solid fa-arrow-left"></i> <span data-key="back-text">Back to home</span></a>
+
+        <div class="page-hero" data-aos="fade-down">
+            <h1 data-key="hero-title">Code prompts</h1>
+            <p data-key="hero-desc">Prompts for refactoring, debugging, documentation, and generating code. Use with ChatGPT, Claude, or any coding assistant.</p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4" data-aos="fade-up">
+                <div class="prompt-card">
+                    <div class="img-container">
+                        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600" alt="Refactor">
+                        <button class="btn-copy-float" onclick="copyPrompt('p1', this)"><i class="fa-regular fa-copy"></i> COPY</button>
+                    </div>
+                    <div class="p-4">
+                        <h5 class="fw-bold" data-key="p1-t">Python refactor</h5>
+                        <p class="text-muted small" data-key="p1-d">Modern, readable, type-hinted code.</p>
+                        <div class="d-none" id="p1">Refactor the following code using modern Pythonic best practices: type hints, clear naming, and PEP 8. Preserve exact behavior. Add a short docstring for the main function.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="50">
+                <div class="prompt-card">
+                    <div class="img-container">
+                        <img src="https://images.unsplash.com/photo-1587620962725-abab7fe55159?auto=format&fit=crop&w=600" alt="Debug">
+                        <button class="btn-copy-float" onclick="copyPrompt('p2', this)"><i class="fa-regular fa-copy"></i> COPY</button>
+                    </div>
+                    <div class="p-4">
+                        <h5 class="fw-bold" data-key="p2-t">Debug & explain</h5>
+                        <p class="text-muted small" data-key="p2-d">Find bugs and suggest a fix with reasoning.</p>
+                        <div class="d-none" id="p2">Review this code for bugs and edge cases. For each issue: 1) Describe the problem. 2) Explain why it happens. 3) Provide a corrected version. Keep the same style and dependencies.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="prompt-card">
+                    <div class="img-container">
+                        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=600" alt="API">
+                        <button class="btn-copy-float" onclick="copyPrompt('p3', this)"><i class="fa-regular fa-copy"></i> COPY</button>
+                    </div>
+                    <div class="p-4">
+                        <h5 class="fw-bold" data-key="p3-t">REST API endpoint</h5>
+                        <p class="text-muted small" data-key="p3-d">Generate a CRUD endpoint with validation.</p>
+                        <div class="d-none" id="p3">Create a REST API endpoint (choose: Express/Flask/FastAPI) for [resource name]. Include: request validation, error handling, and a short comment on status codes. Return JSON.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="150">
+                <div class="prompt-card">
+                    <div class="img-container">
+                        <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?auto=format&fit=crop&w=600" alt="Docs">
+                        <button class="btn-copy-float" onclick="copyPrompt('p4', this)"><i class="fa-regular fa-copy"></i> COPY</button>
+                    </div>
+                    <div class="p-4">
+                        <h5 class="fw-bold" data-key="p4-t">Documentation</h5>
+                        <p class="text-muted small" data-key="p4-d">README and inline comments from code.</p>
+                        <div class="d-none" id="p4">Generate documentation for this code: 1) A README with purpose, setup, and usage. 2) Inline comments for non-obvious logic. Use clear, concise language.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="prompt-card">
+                    <div class="img-container">
+                        <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=600" alt="Test">
+                        <button class="btn-copy-float" onclick="copyPrompt('p5', this)"><i class="fa-regular fa-copy"></i> COPY</button>
+                    </div>
+                    <div class="p-4">
+                        <h5 class="fw-bold" data-key="p5-t">Unit tests</h5>
+                        <p class="text-muted small" data-key="p5-d">Tests for happy path and edge cases.</p>
+                        <div class="d-none" id="p5">Write unit tests for the following code. Use the same language/framework (e.g. pytest, Jest). Cover the happy path and at least 2 edge or error cases. Keep tests readable and isolated.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="250">
+                <div class="prompt-card">
+                    <div class="img-container">
+                        <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=600" alt="SQL">
+                        <button class="btn-copy-float" onclick="copyPrompt('p6', this)"><i class="fa-regular fa-copy"></i> COPY</button>
+                    </div>
+                    <div class="p-4">
+                        <h5 class="fw-bold" data-key="p6-t">SQL from description</h5>
+                        <p class="text-muted small" data-key="p6-d">Generate query from plain English.</p>
+                        <div class="d-none" id="p6">Write a SQL query for: [describe what you need, e.g. "all users who signed up this month and have at least one order"]. Assume standard tables: users (id, email, created_at), orders (id, user_id, total). Use clear aliases and format for readability.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme"><i class="fa-solid fa-moon"></i></button>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800 });
+        const codeTranslations = {
+            en: { "back-text": "Back to home", "hero-title": "Code prompts", "hero-desc": "Prompts for refactoring, debugging, documentation, and generating code. Use with ChatGPT, Claude, or any coding assistant.", "p1-t": "Python refactor", "p1-d": "Modern, readable, type-hinted code.", "p2-t": "Debug & explain", "p2-d": "Find bugs and suggest a fix with reasoning.", "p3-t": "REST API endpoint", "p3-d": "Generate a CRUD endpoint with validation.", "p4-t": "Documentation", "p4-d": "README and inline comments from code.", "p5-t": "Unit tests", "p5-d": "Tests for happy path and edge cases.", "p6-t": "SQL from description", "p6-d": "Generate query from plain English." },
+            ku: { "back-text": "گەڕانەوە بۆ سەرەتا", "hero-title": "پرۆمپتی کۆد", "hero-desc": "پرۆمپت بۆ ڕێکخستنەوە، دیباگ، بەڵگەنامە و دروستکردنی کۆد.", "p1-t": "ڕێکخستنەوەی پایتۆن", "p1-d": "کۆدی مۆدێرن و خوێندنەوە.", "p2-t": "دیباگ و ڕوونکردنەوە", "p2-d": "هەڵە بدۆزەوە و چارەسەر پێشنیار بکە.", "p3-t": "ئەندپۆینتی REST API", "p3-d": "CRUD لەگەڵ پشتڕاستکردنەوە.", "p4-t": "بەڵگەنامە", "p4-d": "README و کۆمێنت لەسەر کۆد.", "p5-t": "تێستە یەکەکان", "p5-d": "تێست بۆ ڕێڕەوی ئاسایی و حاڵەتەکان.", "p6-t": "SQL لە وەسف", "p6-d": "کوئێری لە ئینگلیزی ساکار دروست بکە." },
+            ar: { "back-text": "العودة للرئيسية", "hero-title": "توجيهات البرمجة", "hero-desc": "توجيهات لإعادة الهيكلة والتشخيص والتوثيق وتوليد الكود.", "p1-t": "إعادة كتابة بايثون", "p1-d": "كود حديث وواضح.", "p2-t": "تشخيص وشرح", "p2-d": "اكتشف الأخطاء واقترح إصلاحاً.", "p3-t": "نقطة نهاية REST API", "p3-d": "إنشاء endpoint مع التحقق.", "p4-t": "التوثيق", "p4-d": "README وتعليقات داخل الكود.", "p5-t": "اختبارات وحدة", "p5-d": "اختبارات للمسار السعيد والحالات الحدية.", "p6-t": "SQL من الوصف", "p6-d": "إنشاء استعلام من وصف نصي." }
+        };
+        function updateLang(l) {
+            document.getElementById('mainHtml').lang = l;
+            const t = codeTranslations[l] || codeTranslations.en;
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (key === 'back') return;
+                if (key === 'nav-all') { el.textContent = l === 'en' ? 'All' : (l === 'ku' ? 'هەموو' : 'الكل'); return; }
+                if (key === 'nav-art') { el.textContent = l === 'en' ? 'Art' : (l === 'ku' ? 'هونەر' : 'فن'); return; }
+                if (key === 'nav-photo') { el.textContent = l === 'en' ? 'Photo' : (l === 'ku' ? 'وێنە' : 'تصوير'); return; }
+                if (key === 'nav-code') { el.textContent = l === 'en' ? 'Code' : (l === 'ku' ? 'کۆد' : 'برمجة'); return; }
+                if (t[key]) el.innerText = t[key];
+            });
+            const backSpan = document.querySelector('.back-link [data-key="back-text"]');
+            if (backSpan) backSpan.innerText = t['back-text'];
+        }
+        function toggleTheme() {
+            const h = document.getElementById('mainHtml');
+            const isDark = h.getAttribute('data-bs-theme') === 'dark';
+            h.setAttribute('data-bs-theme', isDark ? 'light' : 'dark');
+            document.querySelector('.theme-toggle i').className = isDark ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+        }
+        function copyPrompt(id, btn) {
+            const txt = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(txt);
+            const orig = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-check"></i> OK';
+            setTimeout(() => btn.innerHTML = orig, 2000);
+        }
+    </script>
+</body>
+</html>

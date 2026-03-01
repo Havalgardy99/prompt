@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="ckb" dir="rtl" id="mainHtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title data-i18n="pageTitle.index">AI Resource Hub | Prompts, Tools & Articles</title>
+  <meta name="description" content="Curated AI prompts for image and video, searchable directory of AI tools, and expert articles. Multilingual: English, Kurdish, Arabic.">
+  <meta property="og:title" content="AI Resource Hub | Prompts, Tools & Articles">
+  <meta property="og:description" content="Curated AI prompts, hundreds of tools, and guides. Create with Midjourney, DALL·E, Runway, ChatGPT and more.">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Vazirmatn:wght@400;600;700&family=Noto+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container">
+        <span class="section-badge" data-i18n="hero.badge">AI-Powered Resources</span>
+        <h1 class="section-title" data-i18n="hero.title">Transform your creativity with the power of AI</h1>
+        <p class="section-desc center" data-i18n="hero.subtitle">Curated prompts, hundreds of AI tools, and expert articles. Everything you need to create with image, video, and language models.</p>
+        
+        <div class="hero-generate-prompt">
+          <div class="generate-category-filter" role="group" aria-label="Prompt type">
+            <label class="generate-category-pill"><input type="radio" name="gemini-category" value="image" checked> <span data-i18n="gemini.categoryImage">Image</span></label>
+            <label class="generate-category-pill"><input type="radio" name="gemini-category" value="video"> <span data-i18n="gemini.categoryVideo">Video</span></label>
+            <label class="generate-category-pill"><input type="radio" name="gemini-category" value="student"> <span data-i18n="gemini.categoryStudent">Student</span></label>
+            <label class="generate-category-pill"><input type="radio" name="gemini-category" value="developing"> <span data-i18n="gemini.categoryDeveloping">Developing</span></label>
+          </div>
+          <div class="generate-prompt-wrap hero-generate-wrap">
+            <input type="text" id="header-generate-input" class="generate-prompt-input" maxlength="500" data-i18n-placeholder="gemini.placeholder" placeholder="Describe your idea, get a prompt...">
+            <button type="button" id="header-generate-btn" class="btn-generate-prompt" data-i18n="gemini.generate"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Generate</button>
+          </div>
+          <p class="hero-generate-hint" id="hero-gemini-hint"><span id="gemini-remaining-count" class="hero-generate-count">10</span> <span id="gemini-hint-suffix">free today</span></p>
+        </div>
+    </section>
+
+    <!-- Logos / Trusted by – marquee with icons -->
+    <section class="logos-section" aria-label="Trusted by creators worldwide">
+      <div class="container">
+        <p class="section-desc center" data-i18n="logos.title">
+          Trusted by creators worldwide
+        </p>
+    
+        <div class="logos-marquee-wrap">
+          <div class="logos-marquee-track">
+    
+            <span class="logo-item" title="Midjourney">
+              <i class="bi bi-stars" aria-hidden="true"></i>
+            </span>
+    
+            <span class="logo-item" title="DALL·E">
+              <i class="bi bi-magic" aria-hidden="true"></i>
+            </span>
+    
+            <span class="logo-item" title="Runway">
+              <i class="bi bi-camera-reels" aria-hidden="true"></i>
+            </span>
+    
+            <span class="logo-item" title="ChatGPT">
+              <i class="bi bi-chat-dots" aria-hidden="true"></i>
+            </span>
+    
+            <span class="logo-item" title="Claude">
+              <i class="bi bi-cpu" aria-hidden="true"></i>
+            </span>
+    
+            <span class="logo-item" title="Gemini">
+              <i class="bi bi-google" aria-hidden="true"></i>
+            </span>
+    
+            <!-- duplicate for seamless loop -->
+    
+            <span class="logo-item" title="Midjourney">
+              <i class="bi bi-stars" aria-hidden="true"></i>
+            </span>
+    
+            <span class="logo-item" title="DALL·E">
+              <i class="bi bi-magic" aria-hidden="true"></i>
+            </span>
+    
+            <span class="logo-item" title="Runway">
+              <i class="bi bi-camera-reels" aria-hidden="true"></i>
+            </span>
+    
+            <span class="logo-item" title="ChatGPT">
+              <i class="bi bi-chat-dots" aria-hidden="true"></i>
+            </span>
+    
+            <span class="logo-item" title="Claude">
+              <i class="bi bi-cpu" aria-hidden="true"></i>
+            </span>
+    
+            <span class="logo-item" title="Gemini">
+              <i class="bi bi-google" aria-hidden="true"></i>
+            </span>
+    
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section class="section-block" id="about">
+      <div class="container">
+        <span class="section-badge" data-i18n="about.badge">About Us</span>
+        <h2 class="section-title" data-i18n="about.title">Your hub for AI prompts and tools</h2>
+        <div class="about-content">
+          <p class="section-desc" data-i18n="about.body">We curate the best image and video prompts, maintain a searchable directory of AI tools, and publish guides so you can get consistent, high-quality results—whether you use Midjourney, DALL·E, Runway, or ChatGPT.</p>
+          <div class="stats-grid">
+            <div class="stat-item">
+              <div class="stat-value" id="stat-prompts">—</div>
+              <div class="stat-label" data-i18n="stats.prompts">Prompts</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value" id="stat-tools">—</div>
+              <div class="stat-label" data-i18n="stats.tools">AI Tools</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value" id="stat-articles">—</div>
+              <div class="stat-label" data-i18n="stats.articles">Articles</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value" id="stat-languages">3</div>
+              <div class="stat-label" data-i18n="stats.languages">Languages</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <form class="hero-search" action="image-prompts.html" method="get" role="search">
+      <div class="search-wrap search-wrap-hero">
+        <i class="fa-solid fa-search" aria-hidden="true"></i>
+        <input type="search" name="q" id="hero-search-input" aria-label="Search prompts" data-i18n-placeholder="nav.searchPlaceholder" placeholder="Search prompts & tools..." autocomplete="off">
+      </div>
+      <button type="submit" class="btn-primary btn-search-submit">
+        <i class="fa-solid fa-search" aria-hidden="true"></i>
+        <span data-i18n="ui.searchPrompts">Search prompts</span>
+      </button>
+    </form>
+    <!-- Services (category cards) -->
+    <section class="section-block" id="services">
+      <div class="container">
+        <span class="section-badge" data-i18n="services.badge">What we offer</span>
+        <h2 class="section-title" data-i18n="services.title">Everything you need to create with AI</h2>
+        <div class="services-grid">
+          <a href="image-prompts.html" class="service-card">
+            <div class="service-card-inner">
+              <span class="service-icon" aria-hidden="true"><i class="fa-solid fa-image"></i></span>
+              <h3 data-i18n="services.image.title">Image Prompts</h3>
+              <p data-i18n="services.image.desc">Curated prompts for art, photo, and design. Copy, tweak aspect ratio and style, and use with Midjourney, DALL·E, Leonardo, and more.</p>
+              <span class="service-card-arrow"><span data-i18n="ui.explore">Explore</span> <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+            </div>
+          </a>
+          <a href="video-prompts.html" class="service-card">
+            <div class="service-card-inner">
+              <span class="service-icon" aria-hidden="true"><i class="fa-solid fa-video"></i></span>
+              <h3 data-i18n="services.video.title">Video Prompts</h3>
+              <p data-i18n="services.video.desc">Prompts for video generation and upscaling. Optimized for Sora, Runway, Pika, and Kaiber.</p>
+              <span class="service-card-arrow"><span data-i18n="ui.explore">Explore</span> <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+            </div>
+          </a>
+          <a href="ai-tools.html" class="service-card">
+            <div class="service-card-inner">
+              <span class="service-icon" aria-hidden="true"><i class="fa-solid fa-wand-magic-sparkles"></i></span>
+              <h3 data-i18n="services.tools.title">AI Tools Directory</h3>
+              <p data-i18n="services.tools.desc">Searchable directory of hundreds of AI tools. Filter by category, pricing, and tags. Find the right tool for any task.</p>
+              <span class="service-card-arrow"><span data-i18n="ui.explore">Explore</span> <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+            </div>
+          </a>
+          <a href="student-prompts.html" class="service-card">
+            <div class="service-card-inner">
+              <span class="service-icon" aria-hidden="true"><i class="fa-solid fa-graduation-cap"></i></span>
+              <h3 data-i18n="services.student.title">Student Prompts</h3>
+              <p data-i18n="services.student.desc">Summarize lectures and books, generate quiz questions, and prepare for exams and finals.</p>
+              <span class="service-card-arrow"><span data-i18n="ui.explore">Explore</span> <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+            </div>
+          </a>
+          <a href="articles.html" class="service-card">
+            <div class="service-card-inner">
+              <span class="service-icon" aria-hidden="true"><i class="fa-solid fa-newspaper"></i></span>
+              <h3 data-i18n="services.articles.title">General AI Articles</h3>
+              <p data-i18n="services.articles.desc">Guides, news, and tutorials on prompt engineering, multimodal AI, and best practices.</p>
+              <span class="service-card-arrow"><span data-i18n="ui.explore">Explore</span> <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="section-block" id="how">
+      <div class="container">
+        <span class="section-badge" data-i18n="howItWorks.badge">How it works</span>
+        <h2 class="section-title" data-i18n="howItWorks.title">From idea to output in minutes</h2>
+        <div class="steps-grid">
+          <div class="step-item">
+            <h3 data-i18n="howItWorks.step1.title">Choose a category</h3>
+            <p data-i18n="howItWorks.step1.desc">Browse Image Prompts, Video Prompts, AI Tools, or Articles.</p>
+          </div>
+          <div class="step-item">
+            <h3 data-i18n="howItWorks.step2.title">Search & filter</h3>
+            <p data-i18n="howItWorks.step2.desc">Use search and filters to find the right prompt or tool.</p>
+          </div>
+          <div class="step-item">
+            <h3 data-i18n="howItWorks.step3.title">Copy & create</h3>
+            <p data-i18n="howItWorks.step3.desc">Copy the prompt, paste into your AI tool, and tweak settings as needed.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Showcase – featured prompts -->
+    <section class="section-block" id="showcase">
+      <div class="container">
+        <span class="section-badge" data-i18n="showcase.badge">Featured</span>
+        <h2 class="section-title" data-i18n="showcase.title">Popular prompts</h2>
+        <p class="section-desc" data-i18n="showcase.subtitle">Copy and use with your favorite AI platforms.</p>
+        <div class="prompts-grid" id="showcase-prompts">
+          <!-- Filled by JS from data/prompts.json -->
+        </div>
+        <div class="load-more-wrap">
+          <a href="image-prompts.html" class="btn-secondary" data-i18n="hero.ctaPrimary">Explore Prompts</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section-block" id="testimonials">
+      <div class="container">
+        <span class="section-badge" data-i18n="testimonials.badge">Testimonials</span>
+        <h2 class="section-title" data-i18n="testimonials.title">What creators say</h2>
+        <div class="testimonials-grid">
+          <div class="testimonial-card">
+            <blockquote data-i18n="testimonials.item1.quote">The prompt library saved me hours. Quality is consistent and the tags make it easy to match my tool.</blockquote>
+            <div class="author" data-i18n="testimonials.item1.author">Sarah M.</div>
+            <div class="role" data-i18n="testimonials.item1.role">Digital artist</div>
+          </div>
+          <div class="testimonial-card">
+            <blockquote data-i18n="testimonials.item2.quote">Finally a directory that lists pricing and categories. I found three new tools for my workflow.</blockquote>
+            <div class="author" data-i18n="testimonials.item2.author">Omar K.</div>
+            <div class="role" data-i18n="testimonials.item2.role">Content creator</div>
+          </div>
+          <div class="testimonial-card">
+            <blockquote data-i18n="testimonials.item3.quote">Clear difficulty levels and tips. My first AI image looked professional thanks to the aspect ratio and negative prompt tips.</blockquote>
+            <div class="author" data-i18n="testimonials.item3.author">Lina T.</div>
+            <div class="role" data-i18n="testimonials.item3.role">Marketer</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Blog preview -->
+    <section class="section-block" id="blog">
+      <div class="container">
+        <span class="section-badge" data-i18n="blog.badge">Blog</span>
+        <h2 class="section-title" data-i18n="blog.title">Latest articles</h2>
+        <div class="blog-grid">
+          <a href="articles.html" class="blog-card">
+            <div class="card-image">
+              <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=600" alt="" loading="lazy">
+            </div>
+            <div class="card-body">
+              <h3>What’s New in Multimodal AI This Year</h3>
+              <p class="meta">5 <span data-i18n="blog.minRead">min read</span></p>
+              <p class="card-desc">A roundup of the latest models and capabilities in vision, audio, and video.</p>
+              <span class="link-read" data-i18n="blog.readMore">Read more</span>
+            </div>
+          </a>
+          <a href="articles.html" class="blog-card">
+            <div class="card-image">
+              <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=600" alt="" loading="lazy">
+            </div>
+            <div class="card-body">
+              <h3>Prompt Engineering Best Practices</h3>
+              <p class="meta">4 <span data-i18n="blog.minRead">min read</span></p>
+              <p class="card-desc">How to write prompts that get consistent, high-quality outputs.</p>
+              <span class="link-read" data-i18n="blog.readMore">Read more</span>
+            </div>
+          </a>
+          <a href="articles.html" class="blog-card">
+            <div class="card-image">
+              <img src="https://images.unsplash.com/photo-1535378917042-10a22c95931a?auto=format&fit=crop&w=600" alt="" loading="lazy">
+            </div>
+            <div class="card-body">
+              <h3>AI Tools Comparison 2025</h3>
+              <p class="meta">8 <span data-i18n="blog.minRead">min read</span></p>
+              <p class="card-desc">Gemini, Claude, ChatGPT, and more — features and use cases.</p>
+              <span class="link-read" data-i18n="blog.readMore">Read more</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section-block">
+      <div class="container">
+        <div class="cta-section">
+          <span class="section-badge" data-i18n="cta.badge">Get started</span>
+          <h2 class="section-title" data-i18n="cta.title">Ready to create with AI?</h2>
+          <p class="section-desc center" data-i18n="cta.subtitle">Browse prompts, explore the tools directory, or read our guides. Everything is free and no sign-up required.</p>
+          <a href="image-prompts.html" class="btn-primary" data-i18n="cta.button">Explore now</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <div class="toast-wrap" id="toast-wrap" aria-live="polite"></div>
+
+  <script src="js/includes.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/gemini-config.js"></script>
+  <script src="js/gemini-prompt.js"></script>
+  <script>
+    (function() {
+      const TOAST_ID = 'toast-wrap';
+      const PROMPTS_URL = 'data/prompts.json';
+      const TOOLS_URL = 'data/tools.json';
+      const SHOWCASE_COUNT = 6;
+
+      function updateStats(promptsData, toolsData) {
+        var prompts = promptsData && promptsData.prompts ? promptsData.prompts : [];
+        var articles = prompts.filter(function(p) { return p.category === 'article'; }).length;
+        var toolsCount = toolsData && toolsData.tools ? toolsData.tools.length : 0;
+        var elPrompts = document.getElementById('stat-prompts');
+        var elTools = document.getElementById('stat-tools');
+        var elArticles = document.getElementById('stat-articles');
+        if (elPrompts) elPrompts.textContent = prompts.length ? prompts.length + '+' : '—';
+        if (elTools && toolsData) elTools.textContent = toolsCount ? toolsCount + '+' : '—';
+        if (elArticles) elArticles.textContent = articles ? articles + '+' : '—';
+      }
+
+      window.showToast = function(message, type) {
+        const wrap = document.getElementById(TOAST_ID);
+        if (!wrap) return;
+        const toast = document.createElement('div');
+        toast.className = 'toast' + (type === 'success' ? ' success' : '');
+        toast.setAttribute('role', 'status');
+        toast.innerHTML = '<i class="fa-solid fa-check"></i> ' + message;
+        wrap.appendChild(toast);
+        setTimeout(function() {
+          toast.remove();
+        }, 3000);
+      };
+
+      window.copyToClipboard = function(text, buttonEl) {
+        if (!navigator.clipboard) return;
+        navigator.clipboard.writeText(text).then(function() {
+          var t = window.AIHub && window.AIHub.t ? window.AIHub.t('actions.copied') : 'Copied!';
+          window.showToast(t, 'success');
+          var orig = buttonEl.innerHTML;
+          buttonEl.innerHTML = '<i class="fa-solid fa-check"></i> ' + t;
+          buttonEl.classList.add('copied');
+          setTimeout(function() {
+            buttonEl.innerHTML = orig;
+            buttonEl.classList.remove('copied');
+          }, 1500);
+        });
+      };
+
+      window.showMeaningModal = function(title, description, detail) {
+        var closeLabel = (window.AIHub && window.AIHub.t('actions.closeModal')) || 'Close';
+        var overlay = document.getElementById('meaning-modal-overlay');
+        if (!overlay) {
+          overlay = document.createElement('div');
+          overlay.id = 'meaning-modal-overlay';
+          overlay.className = 'meaning-modal-overlay';
+          overlay.style.display = 'none';
+          overlay.setAttribute('role', 'dialog');
+          overlay.setAttribute('aria-modal', 'true');
+          overlay.setAttribute('aria-labelledby', 'meaning-modal-title');
+          overlay.innerHTML =
+            '<div class="meaning-modal">' +
+            '<div class="meaning-modal-header">' +
+            '<h2 id="meaning-modal-title"></h2>' +
+            '<button type="button" class="meaning-modal-close" aria-label="' + closeLabel + '"><i class="fa-solid fa-times"></i></button>' +
+            '</div>' +
+            '<div class="meaning-modal-body">' +
+            '<p class="meaning-desc" id="meaning-modal-desc"></p>' +
+            '<div class="meaning-detail" id="meaning-modal-detail"></div>' +
+            '</div></div>';
+          document.body.appendChild(overlay);
+          overlay.querySelector('.meaning-modal-close').addEventListener('click', function() { overlay.style.display = 'none'; });
+          overlay.addEventListener('click', function(e) { if (e.target === overlay) overlay.style.display = 'none'; });
+        }
+        overlay.querySelector('#meaning-modal-title').textContent = title || '';
+        overlay.querySelector('#meaning-modal-desc').textContent = description || '';
+        var detailEl = overlay.querySelector('#meaning-modal-detail');
+        detailEl.textContent = detail || '';
+        detailEl.style.display = detail ? 'block' : 'none';
+        var closeBtn = overlay.querySelector('.meaning-modal-close');
+        if (closeBtn) closeBtn.setAttribute('aria-label', (window.AIHub && window.AIHub.t('actions.closeModal')) || 'Close');
+        overlay.style.display = 'flex';
+      };
+
+      window.showMeaningModalFromId = function(meaningId) {
+        var titleEl = document.getElementById(meaningId + '-title');
+        var descEl = document.getElementById(meaningId + '-desc');
+        var detailEl = document.getElementById(meaningId + '-detail');
+        var title = titleEl ? titleEl.innerText : '';
+        var desc = descEl ? descEl.innerText : '';
+        var detail = detailEl ? detailEl.innerText : '';
+        window.showMeaningModal(title, desc, detail);
+      };
+
+      function renderShowcase(data) {
+          var prompts = (data.prompts || []).slice(0, SHOWCASE_COUNT);
+          var grid = document.getElementById('showcase-prompts');
+          if (!grid) return;
+          var t = window.AIHub && window.AIHub.t ? function(path) { return window.AIHub.t(path); } : function() { return ''; };
+          function getTitle(p) {
+            var key = 'prompts.' + p.id + '.title';
+            var val = t(key);
+            return (val && val !== key) ? val : (p.title || ('Prompt ' + p.id));
+          }
+          function getDesc(p) {
+            var key = 'prompts.' + p.id + '.description';
+            var val = t(key);
+            return (val && val !== key) ? val : (p.description || '');
+          }
+          function getDetail(p) {
+            var key = 'prompts.' + p.id + '.detail';
+            var val = t(key);
+            return (val && val !== key) ? val : '';
+          }
+          grid.innerHTML = '';
+          prompts.forEach(function(p) {
+            var displayTitle = p.title || ('Prompt ' + p.id);
+            var displayDesc = p.description || '';
+            var meaningTitle = getTitle(p);
+            var meaningDesc = getDesc(p);
+            var detail = getDetail(p);
+            var copyLabel = t('actions.copyPrompt') || t('actions.copy') || 'Copy';
+            var viewMeaningLabel = t('actions.viewMeaning') || 'View meaning';
+            var promptSafe = (p.prompt || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            var meaningId = 'meaning-showcase-' + p.id;
+            var card = document.createElement('article');
+            card.className = 'glass-card prompt-card';
+            card.setAttribute('data-title', displayTitle);
+            card.setAttribute('data-desc', displayDesc);
+            card.setAttribute('data-prompt', p.prompt);
+            card.innerHTML =
+              '<div class="card-image"><img src="' + (p.image || '') + '" alt="" loading="lazy"></div>' +
+              '<div class="card-body">' +
+              '<div class="tag-row"><span class="prompt-tag">' + (t('tips.optimizedFor') || 'Optimized for') + '</span>' +
+              (p.toolTags && p.toolTags[0] ? '<span class="prompt-tag blue">' + (p.toolTags[0].charAt(0).toUpperCase() + p.toolTags[0].slice(1)) + '</span>' : '') +
+              '</div>' +
+              '<h3>' + displayTitle.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</h3>' +
+              '<p class="card-desc">' + displayDesc.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</p>' +
+              '<div class="d-none" id="prompt-content-' + p.id + '">' + promptSafe + '</div>' +
+              '<div class="d-none" id="' + meaningId + '-title">' + meaningTitle.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div>' +
+              '<div class="d-none" id="' + meaningId + '-desc">' + meaningDesc.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div>' +
+              '<div class="d-none" id="' + meaningId + '-detail">' + (detail || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div>' +
+              '<div class="btn-row" style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.5rem;">' +
+              '<button type="button" class="btn-copy" onclick="copyToClipboard(document.getElementById(\'prompt-content-' + p.id + '\').innerText, this)"><i class="fa-regular fa-copy"></i> ' + copyLabel + '</button>' +
+              '<button type="button" class="btn-secondary" onclick="showMeaningModalFromId(\'' + meaningId + '\')"><i class="fa-solid fa-circle-info"></i> ' + viewMeaningLabel + '</button>' +
+              '</div>' +
+              '</div>';
+            grid.appendChild(card);
+          });
+        }
+      // Load showcase prompts and stats from JSON
+      Promise.all([
+        fetch(PROMPTS_URL).then(function(r) { return r.json(); }),
+        fetch(TOOLS_URL).then(function(r) { return r.json(); })
+      ]).then(function(results) {
+        var promptsData = results[0];
+        var toolsData = results[1];
+        renderShowcase(promptsData);
+        updateStats(promptsData, toolsData);
+        window.onLangChange = function() { renderShowcase(promptsData); };
+      }).catch(function() {
+        fetch(PROMPTS_URL).then(function(r) { return r.json(); }).then(function(data) {
+          renderShowcase(data);
+          updateStats(data, null);
+          window.onLangChange = function() { renderShowcase(data); };
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

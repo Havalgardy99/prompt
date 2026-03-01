@@ -1,0 +1,11 @@
+# Gemini API key – do not commit
+js/gemini-config.js
+
+# Dependencies
+node_modules
+
+# OS and editor
+.DS_Store
+*.log
+.env
+.env.*

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ckb" dir="rtl" data-bs-theme="dark" id="mainHtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Prompts | PromptCore</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;600;800&family=Noto+Sans+Arabic:wght@300;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <nav class="container py-4 d-flex flex-wrap justify-content-between align-items-center gap-3">
+        <a href="index.html" class="nav-brand"><h3 class="mb-0">PROMPT<span>CORE</span></h3></a>
+        <div class="d-flex align-items-center gap-3">
+            <a href="index.html" class="nav-link-cat" data-key="nav-all">All</a>
+            <a href="art.html" class="nav-link-cat" data-key="nav-art">Art</a>
+            <a href="photo.html" class="nav-link-cat active" data-key="nav-photo">Photo</a>
+            <a href="code.html" class="nav-link-cat" data-key="nav-code">Code</a>
+            <select class="form-select form-select-sm bg-transparent border-secondary text-body rounded-pill px-3" style="width: auto;" onchange="updateLang(this.value)">
+                <option value="en">English</option>
+                <option value="ku">Kurdî</option>
+                <option value="ar">العربية</option>
+            </select>
+        </div>
+    </nav>
+
+    <main class="container pb-5">
+        <a href="index.html" class="back-link" data-key="back"><i class="fa-solid fa-arrow-left"></i> <span data-key="back-text">Back to home</span></a>
+
+        <div class="page-hero" data-aos="fade-down">
+            <h1 data-key="hero-title">Photo prompts</h1>
+            <p data-key="hero-desc">Photography-style prompts for realistic portraits, landscapes, and cinematic shots. Use with image models for photorealistic results.</p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4" data-aos="fade-up">
+                <div class="prompt-card">
+                    <div class="img-container">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600" alt="Portrait">
+                        <button class="btn-copy-float" onclick="copyPrompt('p1', this)"><i class="fa-regular fa-copy"></i> COPY</button>
+                    </div>
+                    <div class="p-4">
+                        <h5 class="fw-bold" data-key="p1-t">Cinematic portrait</h5>
+                        <p class="text-muted small" data-key="p1-d">Golden hour, 85mm, shallow depth of field.</p>
+                        <div class="d-none" id="p1">Photorealistic portrait of a woman, golden hour lighting, 85mm lens, f/1.8, shallow depth of field, skin texture detailed --v 6.0</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="50">
+                <div class="prompt-card">
+                    <div class="img-container">
+                        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=600" alt="Mountain">
+                        <button class="btn-copy-float" onclick="copyPrompt('p2', this)"><i class="fa-regular fa-copy"></i> COPY</button>
+                    </div>
+                    <div class="p-4">
+                        <h5 class="fw-bold" data-key="p2-t">Mountain landscape</h5>
+                        <p class="text-muted small" data-key="p2-d">Epic peaks, morning mist, wide angle.</p>
+                        <div class="d-none" id="p2">Epic mountain landscape photography, morning mist, snow-capped peaks, wide angle 16mm, dramatic clouds, National Geographic style --ar 3:2</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="prompt-card">
+                    <div class="img-container">
+                        <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=600" alt="Street">
+                        <button class="btn-copy-float" onclick="copyPrompt('p3', this)"><i class="fa-regular fa-copy"></i> COPY</button>
+                    </div>
+                    <div class="p-4">
+                        <h5 class="fw-bold" data-key="p3-t">Street photography</h5>
+                        <p class="text-muted small" data-key="p3-d">Urban life, candid, natural light.</p>
+                        <div class="d-none" id="p3">Street photography, candid moment, urban environment, natural light, 35mm lens, film grain, documentary style, raw and authentic --ar 2:3</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="150">
+                <div class="prompt-card">
+                    <div class="img-container">
+                        <img src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&fit=crop&w=600" alt="Product">
+                        <button class="btn-copy-float" onclick="copyPrompt('p4', this)"><i class="fa-regular fa-copy"></i> COPY</button>
+                    </div>
+                    <div class="p-4">
+                        <h5 class="fw-bold" data-key="p4-t">Product shot</h5>
+                        <p class="text-muted small" data-key="p4-d">Clean studio lighting, reflective surfaces.</p>
+                        <div class="d-none" id="p4">Professional product photography, white seamless background, soft studio lighting, reflective surfaces, commercial quality, 100mm macro --ar 1:1</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="prompt-card">
+                    <div class="img-container">
+                        <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=600" alt="Film">
+                        <button class="btn-copy-float" onclick="copyPrompt('p5', this)"><i class="fa-regular fa-copy"></i> COPY</button>
+                    </div>
+                    <div class="p-4">
+                        <h5 class="fw-bold" data-key="p5-t">Film noir mood</h5>
+                        <p class="text-muted small" data-key="p5-d">High contrast, shadows, black and white.</p>
+                        <div class="d-none" id="p5">Film noir style photography, high contrast black and white, dramatic shadows, 1940s aesthetic, cigarette smoke, moody atmosphere --ar 2:3</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="250">
+                <div class="prompt-card">
+                    <div class="img-container">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600" alt="Lifestyle">
+                        <button class="btn-copy-float" onclick="copyPrompt('p6', this)"><i class="fa-regular fa-copy"></i> COPY</button>
+                    </div>
+                    <div class="p-4">
+                        <h5 class="fw-bold" data-key="p6-t">Lifestyle editorial</h5>
+                        <p class="text-muted small" data-key="p6-d">Natural, warm, magazine-style composition.</p>
+                        <div class="d-none" id="p6">Lifestyle editorial photography, natural light, warm tones, candid pose, magazine quality, 50mm lens, shallow DOF, cozy interior --ar 4:5</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme"><i class="fa-solid fa-moon"></i></button>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800 });
+        const photoTranslations = {
+            en: { "back-text": "Back to home", "hero-title": "Photo prompts", "hero-desc": "Photography-style prompts for realistic portraits, landscapes, and cinematic shots. Use with image models for photorealistic results.", "p1-t": "Cinematic portrait", "p1-d": "Golden hour, 85mm, shallow depth of field.", "p2-t": "Mountain landscape", "p2-d": "Epic peaks, morning mist, wide angle.", "p3-t": "Street photography", "p3-d": "Urban life, candid, natural light.", "p4-t": "Product shot", "p4-d": "Clean studio lighting, reflective surfaces.", "p5-t": "Film noir mood", "p5-d": "High contrast, shadows, black and white.", "p6-t": "Lifestyle editorial", "p6-d": "Natural, warm, magazine-style composition." },
+            ku: { "back-text": "گەڕانەوە بۆ سەرەتا", "hero-title": "پرۆمپتی وێنە", "hero-desc": "پرۆمپتی وێنەگری بۆ پۆرترێت و دیمەنە ڕاستەقینەکان.", "p1-t": "پۆرترێتی سینەمایی", "p1-d": "کاتژمێرە زێڕینە، 85mm.", "p2-t": "دیمەنی چیا", "p2-d": "لووتکە، تەم، گۆشەی فراوان.", "p3-t": "وێنەی شەقام", "p3-d": "ژیانی شار، سروشت، ڕووناکی سروشتی.", "p4-t": "وێنەی بەرهەم", "p4-d": "ڕووناکی ستۆدیۆ، ڕووکەش.", "p5-t": "مۆدی فیلم نوار", "p5-d": "کۆنتراست، سێبەر، ڕەش و سپی.", "p6-t": "ئیدیتۆریاڵ ژیان", "p6-d": "سروشتی، گەرم، وەک مەگازین." },
+            ar: { "back-text": "العودة للرئيسية", "hero-title": "توجيهات التصوير", "hero-desc": "توجيهات أسلوب التصوير للبورتريه والمناظر الواقعية.", "p1-t": "بورتريه سينمائي", "p1-d": "الساعة الذهبية، 85mm.", "p2-t": "منظر جبلي", "p2-d": "قمم، ضباب، زاوية عريضة.", "p3-t": "تصوير الشارع", "p3-d": "حياة حضرية، لقطات طبيعية.", "p4-t": "لقطة منتج", "p4-d": "إضاءة استوديو، أسطح عاكسة.", "p5-t": "أجواء فيلم نوار", "p5-d": "تباين عالٍ، ظلال، أبيض وأسود.", "p6-t": "تصوير أسلوب حياة", "p6-d": "طبيعي، دافئ، أسلوب مجلة." }
+        };
+        function updateLang(l) {
+            document.getElementById('mainHtml').lang = l;
+            const t = photoTranslations[l] || photoTranslations.en;
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (key === 'back') return;
+                if (key === 'nav-all') { el.textContent = l === 'en' ? 'All' : (l === 'ku' ? 'هەموو' : 'الكل'); return; }
+                if (key === 'nav-art') { el.textContent = l === 'en' ? 'Art' : (l === 'ku' ? 'هونەر' : 'فن'); return; }
+                if (key === 'nav-photo') { el.textContent = l === 'en' ? 'Photo' : (l === 'ku' ? 'وێنە' : 'تصوير'); return; }
+                if (key === 'nav-code') { el.textContent = l === 'en' ? 'Code' : (l === 'ku' ? 'کۆد' : 'برمجة'); return; }
+                if (t[key]) el.innerText = t[key];
+            });
+            const backSpan = document.querySelector('.back-link [data-key="back-text"]');
+            if (backSpan) backSpan.innerText = t['back-text'];
+        }
+        function toggleTheme() {
+            const h = document.getElementById('mainHtml');
+            const isDark = h.getAttribute('data-bs-theme') === 'dark';
+            h.setAttribute('data-bs-theme', isDark ? 'light' : 'dark');
+            document.querySelector('.theme-toggle i').className = isDark ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+        }
+        function copyPrompt(id, btn) {
+            const txt = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(txt);
+            const orig = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-check"></i> OK';
+            setTimeout(() => btn.innerHTML = orig, 2000);
+        }
+    </script>
+</body>
+</html>

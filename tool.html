@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ckb" dir="rtl" id="mainHtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="pageTitle.toolDetail">Tool | AI Resource Hub</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Vazirmatn:wght@400;600;700&family=Noto+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main id="main">
+    <div class="container">
+      <a href="ai-tools.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="actions.back">Back</span></a>
+      <div id="tool-detail"></div>
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="js/includes.js"></script>
+  <script src="js/i18n.js"></script>
+  <script>
+    (function() {
+      var params = new URLSearchParams(window.location.search);
+      var id = params.get('id');
+      var slug = params.get('slug');
+      var TOOLS_URL = 'data/tools.json';
+
+      function t(path) { return (window.AIHub && window.AIHub.t(path)) || path; }
+
+      fetch(TOOLS_URL)
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          var tools = data.tools || [];
+          var tool = id ? tools.find(function(x) { return x.id === parseInt(id, 10); }) : (slug ? tools.find(function(x) { return x.slug === slug; }) : null);
+          var el = document.getElementById('tool-detail');
+          if (!tool) {
+            el.innerHTML = '<p class="empty-state">' + (t('errors.toolNotFound') || 'Tool not found.') + '</p>';
+            return;
+          }
+          var name = t('tools.' + tool.slug + '.name') || tool.name || tool.slug;
+          var summary = t('tools.' + tool.slug + '.summary') || tool.summary || '';
+          var pricingLabel = t('pricing.' + tool.pricing) || tool.pricing;
+          var catLabel = t('categories.' + tool.category + 'Cat') || t('categories.' + tool.category) || tool.category;
+          var visitLabel = t('actions.visit') || 'Visit';
+          document.title = name + ' | AI Resource Hub';
+          el.innerHTML =
+            '<div class="detail-card">' +
+            '<h1 class="section-title">' + name + '</h1>' +
+            '<p class="tool-meta">' + pricingLabel + ' · ' + catLabel + '</p>' +
+            '<p class="section-desc">' + summary + '</p>' +
+            '<a href="' + (tool.link || '#') + '" target="_blank" rel="noopener" class="btn-primary">' + visitLabel + ' <i class="fa-solid fa-arrow-up-right-from-square"></i></a>' +
+            '</div>';
+        })
+        .catch(function() {
+          document.getElementById('tool-detail').innerHTML = '<p class="empty-state">' + (t('errors.loadTool') || 'Failed to load tool.') + '</p>';
+        });
+    })();
+  </script>
+</body>
+</html>

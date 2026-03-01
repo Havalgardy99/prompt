@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ckb" dir="rtl" id="mainHtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="pageTitle.imagePrompts">Image Prompts | AI Resource Hub</title>
+  <meta name="description" content="Curated image prompts for Midjourney, DALL·E, Leonardo. Art, photo, design. Copy and use.">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Vazirmatn:wght@400;600;700&family=Noto+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main id="main">
+    <div class="container"><a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="actions.back">Back</span></a></div>
+    <section class="category-hero category-hero-image">
+      <div class="category-hero-bg" aria-hidden="true"></div>
+      <div class="container category-hero-inner">
+        <h1 class="section-title" data-i18n="categories.image">Image Prompts</h1>
+        <p class="section-desc" data-i18n="services.image.desc">Curated prompts for art, photo, and design. Copy and use with Midjourney, DALL·E, Leonardo.</p>
+      </div>
+    </section>
+    <div class="container">
+      <div class="tip-box" role="status">
+        <i class="fa-solid fa-lightbulb" aria-hidden="true"></i>
+        <span data-i18n="ui.howToUseTip">Click “Copy prompt” then paste into Midjourney, DALL·E, or your AI app.</span>
+      </div>
+      <div class="filter-bar">
+        <div class="filter-group" style="flex: 1; min-width: 200px;">
+          <label class="filter-label" for="search-input" data-i18n="ui.searchPrompts">Search prompts</label>
+          <input type="search" id="search-input" data-i18n-placeholder="nav.searchPlaceholder" placeholder="Search..." aria-label="Search prompts">
+        </div>
+        <div class="filter-group" style="min-width: 140px;">
+          <label class="filter-label" for="filter-subcategory" data-i18n="ui.filterType">Type</label>
+          <select id="filter-subcategory" aria-label="Type">
+            <option value="" data-i18n="ui.allTypes">All types</option>
+          </select>
+        </div>
+        <div class="filter-group" style="min-width: 140px;">
+          <label class="filter-label" for="filter-tag" data-i18n="ui.filterTag">Tag</label>
+          <select id="filter-tag" aria-label="Tag">
+            <option value="" data-i18n="ui.allTags">All tags</option>
+          </select>
+        </div>
+        <div class="filter-group" style="min-width: 160px;">
+          <label class="filter-label" for="filter-difficulty" data-i18n="ui.filterByLevel">Level</label>
+          <select id="filter-difficulty" aria-label="Difficulty">
+            <option value="" data-i18n="ui.allLevels">All levels</option>
+            <option value="beginner" data-i18n="difficulty.beginner">Beginner</option>
+            <option value="intermediate" data-i18n="difficulty.intermediate">Intermediate</option>
+            <option value="pro" data-i18n="difficulty.pro">Pro</option>
+          </select>
+        </div>
+      </div>
+      <div class="prompts-grid" id="prompts-grid"></div>
+      <div class="load-more-wrap" id="load-more-wrap" style="display:none;">
+        <button type="button" class="btn-load-more" id="btn-load-more" data-i18n="actions.loadMore">Load more</button>
+      </div>
+      <div class="empty-state" id="empty-state" style="display:none;"></div>
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <div class="toast-wrap" id="toast-wrap" aria-live="polite"></div>
+
+  <script src="js/includes.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/category-prompts.js"></script>
+  <script>
+    window.CATEGORY = 'image';
+    window.PROMPTS_URL = 'data/prompts.json';
+  </script>
+</body>
+</html>

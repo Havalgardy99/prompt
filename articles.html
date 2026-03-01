@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ckb" dir="rtl" id="mainHtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="pageTitle.articles">General AI Articles | AI Resource Hub</title>
+  <meta name="description" content="Guides, news, and tutorials on prompt engineering and multimodal AI.">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Vazirmatn:wght@400;600;700&family=Noto+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main id="main">
+    <div class="container"><a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="actions.back">Back</span></a></div>
+    <section class="category-hero category-hero-articles">
+      <div class="category-hero-bg" aria-hidden="true"></div>
+      <div class="container category-hero-inner">
+        <h1 class="section-title" data-i18n="categories.article">General AI Articles</h1>
+        <p class="section-desc" data-i18n="services.articles.desc">Guides, news, and tutorials on prompt engineering, multimodal AI, and best practices.</p>
+      </div>
+    </section>
+    <div class="container">
+      <div class="filter-bar">
+        <div class="filter-group" style="flex: 1; min-width: 200px;">
+          <label class="filter-label" for="article-search" data-i18n="ui.searchPrompts">Search</label>
+          <input type="search" id="article-search" data-i18n-placeholder="nav.searchPlaceholder" placeholder="Search..." aria-label="Search articles">
+        </div>
+        <div class="filter-group" style="min-width: 140px;">
+          <label class="filter-label" for="article-filter-type" data-i18n="ui.filterType">Type</label>
+          <select id="article-filter-type" aria-label="Type">
+            <option value="" data-i18n="ui.allTypes">All types</option>
+          </select>
+        </div>
+        <div class="filter-group" style="min-width: 140px;">
+          <label class="filter-label" for="article-filter-tag" data-i18n="ui.filterTag">Tag</label>
+          <select id="article-filter-tag" aria-label="Tag">
+            <option value="" data-i18n="ui.allTags">All tags</option>
+          </select>
+        </div>
+      </div>
+      <div class="prompts-grid" id="articles-grid"></div>
+      <div class="empty-state" id="empty-state" style="display:none;"></div>
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="js/includes.js"></script>
+  <script src="js/i18n.js"></script>
+  <script>
+    (function() {
+      var PROMPTS_URL = 'data/prompts.json';
+      var grid = document.getElementById('articles-grid');
+      var searchEl = document.getElementById('article-search');
+      var filterTypeEl = document.getElementById('article-filter-type');
+      var filterTagEl = document.getElementById('article-filter-tag');
+      var emptyState = document.getElementById('empty-state');
+
+      function t(path) { return (window.AIHub && window.AIHub.t(path)) || path; }
+      function getTitle(p) {
+        var key = 'prompts.' + p.id + '.title';
+        var val = (window.AIHub && window.AIHub.t(key));
+        return (val && val !== key) ? val : (p.title || ('Article ' + p.id));
+      }
+      function getDesc(p) {
+        var key = 'prompts.' + p.id + '.description';
+        var val = (window.AIHub && window.AIHub.t(key));
+        return (val && val !== key) ? val : (p.description || '');
+      }
+      function capitalize(s) {
+        return (s && s.charAt(0).toUpperCase() + s.slice(1)) || s;
+      }
+      fetch(PROMPTS_URL)
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          var prompts = (data.prompts || []).filter(function(p) { return p.category === 'article'; });
+          var subcats = [];
+          var tagsSet = {};
+          prompts.forEach(function(p) {
+            if (p.subcategory && subcats.indexOf(p.subcategory) < 0) subcats.push(p.subcategory);
+            (p.tags || []).forEach(function(t) { tagsSet[t] = true; });
+          });
+          var tags = Object.keys(tagsSet).sort();
+          if (filterTypeEl) {
+            subcats.forEach(function(s) {
+              var opt = document.createElement('option');
+              opt.value = s;
+              opt.textContent = capitalize(s);
+              filterTypeEl.appendChild(opt);
+            });
+          }
+          if (filterTagEl) {
+            tags.forEach(function(t) {
+              var opt = document.createElement('option');
+              opt.value = t;
+              opt.textContent = capitalize(t);
+              filterTagEl.appendChild(opt);
+            });
+          }
+          function render() {
+            var q = (searchEl && searchEl.value) ? searchEl.value.trim().toLowerCase() : '';
+            var typeVal = filterTypeEl ? filterTypeEl.value : '';
+            var tagVal = filterTagEl ? filterTagEl.value : '';
+            var list = prompts.filter(function(p) {
+              if (q) {
+                var title = (getTitle(p) || '').toLowerCase();
+                var desc = (getDesc(p) || '').toLowerCase();
+                if (title.indexOf(q) < 0 && desc.indexOf(q) < 0) return false;
+              }
+              if (typeVal && p.subcategory !== typeVal) return false;
+              if (tagVal && (!p.tags || p.tags.indexOf(tagVal) < 0)) return false;
+              return true;
+            });
+            grid.innerHTML = '';
+            list.forEach(function(p) {
+              var title = getTitle(p);
+              var desc = getDesc(p);
+              var card = document.createElement('article');
+              card.className = 'glass-card prompt-card';
+              var imgSrc = p.image || 'https://placehold.co/800x450/1e1b4b/6366f1?text=Article';
+              card.innerHTML =
+                '<div class="card-image"><a href="prompt.html?id=' + p.id + '"><img src="' + imgSrc + '" alt="" loading="lazy"></a></div>' +
+                '<div class="card-body">' +
+                '<h3><a href="prompt.html?id=' + p.id + '" style="color:inherit;text-decoration:none;">' + title + '</a></h3>' +
+                '<p class="card-desc">' + desc + '</p>' +
+                '<a href="prompt.html?id=' + p.id + '" class="btn-copy" style="display:inline-flex;text-decoration:none;"><i class="fa-solid fa-arrow-right"></i> ' + t('blog.readMore') + '</a>' +
+                '</div>';
+              grid.appendChild(card);
+            });
+            if (emptyState) {
+              emptyState.style.display = list.length === 0 ? 'block' : 'none';
+              emptyState.textContent = t('ui.noArticlesMatch') || 'No articles match your search.';
+            }
+          }
+          render();
+          if (searchEl) searchEl.addEventListener('input', render);
+          if (filterTypeEl) filterTypeEl.addEventListener('change', render);
+          if (filterTagEl) filterTagEl.addEventListener('change', render);
+        })
+        .catch(function() {
+          grid.innerHTML = '<p class="empty-state">' + (t('errors.loadArticles') || 'Failed to load articles.') + '</p>';
+        });
+    })();
+  </script>
+</body>
+</html>

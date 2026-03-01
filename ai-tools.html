@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ckb" dir="rtl" id="mainHtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="pageTitle.aiTools">AI Tools Directory | AI Resource Hub</title>
+  <meta name="description" content="Searchable directory of AI tools. Filter by category and pricing. ChatGPT, Gemini, Claude, Midjourney, Runway and more.">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Vazirmatn:wght@400;600;700&family=Noto+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main id="main">
+    <div class="container"><a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="actions.back">Back</span></a></div>
+    <section class="category-hero category-hero-tools">
+      <div class="category-hero-bg" aria-hidden="true"></div>
+      <div class="container category-hero-inner">
+        <h1 class="section-title" data-i18n="categories.aiTools">AI Tools Directory</h1>
+        <p class="section-desc" data-i18n="services.tools.desc">Searchable directory of hundreds of AI tools. Filter by category, pricing, and tags.</p>
+      </div>
+    </section>
+    <div class="container">
+
+      <h2 class="section-title" style="font-size:1.25rem;margin-bottom:1rem;" data-i18n="sections.topTools">Top 4 AI Platforms</h2>
+      <div class="tools-top4" id="tools-featured"></div>
+
+      <div class="filter-bar tools-controls">
+        <div class="filter-group" style="flex: 1; min-width: 200px;">
+          <label class="filter-label" for="filter-search" data-i18n="ui.searchTools">Search tools</label>
+          <input type="search" id="filter-search" data-i18n-placeholder="nav.searchPlaceholder" placeholder="Search..." aria-label="Search tools">
+        </div>
+        <div class="filter-group" style="min-width: 160px;">
+          <label class="filter-label" for="filter-category" data-i18n="ui.category">Category</label>
+          <select id="filter-category" aria-label="Category">
+            <option value="" data-i18n="ui.allCategories">All categories</option>
+            <option value="chatbots" data-i18n="categories.chatbots">Chatbots</option>
+            <option value="image" data-i18n="categories.imageCat">Image</option>
+            <option value="video" data-i18n="categories.videoCat">Video</option>
+            <option value="audio" data-i18n="categories.audio">Audio</option>
+            <option value="coding" data-i18n="categories.coding">Coding</option>
+            <option value="productivity" data-i18n="categories.productivity">Productivity</option>
+            <option value="research" data-i18n="categories.research">Research</option>
+            <option value="design" data-i18n="categories.design">Design</option>
+          </select>
+        </div>
+        <div class="filter-group" style="min-width: 140px;">
+          <label class="filter-label" for="filter-pricing" data-i18n="ui.pricing">Pricing</label>
+          <select id="filter-pricing" aria-label="Pricing">
+            <option value="" data-i18n="ui.allPricing">All pricing</option>
+            <option value="free" data-i18n="pricing.free">Free</option>
+            <option value="freemium" data-i18n="pricing.freemium">Freemium</option>
+            <option value="paid" data-i18n="pricing.paid">Paid</option>
+          </select>
+        </div>
+      </div>
+      <div class="tools-grid" id="tools-grid"></div>
+      <div class="load-more-wrap" id="load-more-wrap" style="display:none;">
+        <button type="button" class="btn-load-more" id="btn-load-more" data-i18n="actions.loadMore">Load more</button>
+      </div>
+      <div class="empty-state" id="empty-state" style="display:none;"></div>
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="js/includes.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/category-tools.js"></script>
+</body>
+</html>
