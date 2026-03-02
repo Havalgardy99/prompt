@@ -18,3 +18,10 @@ const content =
 
 fs.writeFileSync(outPath, content, 'utf8');
 console.log('Wrote js/gemini-config.default.js (key ' + (key ? 'set' : 'empty') + ')');
+
+// Remove node_modules so deploy doesn't include them (Cloudflare 25 MB asset limit)
+const nodeModules = path.join(__dirname, '..', 'node_modules');
+if (fs.existsSync(nodeModules)) {
+  fs.rmSync(nodeModules, { recursive: true });
+  console.log('Removed node_modules for deploy');
+}
