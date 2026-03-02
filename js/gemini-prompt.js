@@ -208,8 +208,7 @@
     var systemKey = 'gemini.system' + category.charAt(0).toUpperCase() + category.slice(1);
     var systemInstruction = (t(systemKey) || t('gemini.systemImage')).trim();
     systemInstruction = systemInstruction +
-      '\n\nImportant: Always write the prompt in English only. The output must be in English regardless of the language the user writes in.' +
-      '\n\nStay strictly true to what the user asked for. Describe only what they described; do not add subjects, details, or elements they did not mention. If the request is vague, make a reasonable prompt that matches their idea—do not invent unrelated or fictional content. Output only the prompt text, no explanations, no code, no extra sentences.';
+      '\n\nQuality rules: Produce the best possible prompt—detailed, specific, and ready to use. Use clear, vivid language; include relevant technical terms (e.g. lighting, composition, style) where they improve results. Structure the prompt so the target AI (image/video/study/code tool) can give a strong result on the first try. Stay true to what the user asked; do not add unrelated elements. Output in English only. Output only the prompt text: no explanations, no code, no extra sentences.';
     var body = {
       systemInstruction: { parts: [{ text: systemInstruction }] },
       contents: [{ role: 'user', parts: [{ text: userText }] }],
