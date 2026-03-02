@@ -194,13 +194,13 @@
     var key = window.GEMINI_API_KEY;
     if (!key || key === 'YOUR_GEMINI_API_KEY') {
       showError(t('gemini.noKey') || 'API key not configured. Add your key in js/gemini-config.js');
-      return Promise.reject(new Error('No API key'));
+      return Promise.resolve();
     }
     var u = getUsage();
     if (u.count >= LIMIT) {
       var resetIn = Math.ceil((u.resetAt - Date.now()) / 60000);
       showError((t('gemini.limitReached') || 'You can generate up to 10 prompts per 24 hours. Try again in {{min}} minutes.').replace('{{min}}', resetIn));
-      return Promise.reject(new Error('Rate limit'));
+      return Promise.resolve();
     }
     var models = (window.GEMINI_MODEL && [window.GEMINI_MODEL]) || MODELS_TO_TRY;
     var categoryEl = document.querySelector('input[name="gemini-category"]:checked');
