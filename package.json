@@ -2,5 +2,9 @@
   "dependencies": {
     "bootstrap": "^5.3.8",
     "bootstrap-icons": "^1.13.1"
+  },
+  "scripts": {
+    "url": "echo 'Your live site: https://prompt1.pages.dev'",
+    "open": "open https://prompt1.pages.dev"
   }
 }
